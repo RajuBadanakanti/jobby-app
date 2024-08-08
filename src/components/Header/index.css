@@ -1,0 +1,130 @@
+/* >>>>>>>>> Mobile Device >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.header-container {
+  background-color: #202020;
+  height: 80px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menu-items-container {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.website-header-logo {
+  height: 20px;
+  width: 70px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.sm-header-items-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lg-header-items-div {
+  display: none;
+}
+.header-icons {
+  margin-right: 20px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.home-job-text {
+  color: #f1f5f9;
+  font-size: 15px;
+  font-family: 'roboto';
+  font-weight: 500;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.logout-button {
+  display: none;
+}
+.sm-logout-btn {
+  height: 45px;
+  width: 45px;
+  background-color: transparent;
+  border: none;
+  font-size: 0px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header-link {
+  text-decoration: none;
+}
+/* >>>>>>>>> Large Device >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+@media screen and (min-width: 768px) {
+  .header-container {
+    background-color: #202020;
+    height: 110px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu-items-container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .website-header-logo {
+    height: 50px;
+    width: 150px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  .lg-header-items-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sm-header-items-div {
+    display: none;
+  }
+  .home-job-text {
+    color: #f1f5f9;
+    font-size: 20px;
+    font-family: 'roboto';
+    font-weight: 500;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .logout-button {
+    height: 40px;
+    width: 120px;
+    padding: 10px;
+    background-color: #4f46e5;
+    color: #ffffff;
+    font-size: 15px;
+    font-family: 'roboto';
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sm-logout-btn {
+    display: none;
+  }
+}
