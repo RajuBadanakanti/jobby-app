@@ -25,34 +25,43 @@ const Header = props => {
           />
         </Link>
 
-        <div className="sm-header-items-div">
+        <ul className="sm-header-items-div">
           <Link to="/" className="header-link">
-            <MdHome size="26" className="header-icons" />
+            <li className="li-sm-header-items-div">
+              <MdHome size="26" className="header-icons" />
+            </li>
           </Link>
 
           <Link to="/jobs" className="header-link">
-            <BsBriefcaseFill size="20" className="header-icons" />
+            <li className="li-sm-header-items-div">
+              <BsBriefcaseFill size="20" className="header-icons" />
+            </li>
           </Link>
+          <li className="li-sm-header-items-div">
+            <button type="button" className="sm-logout-btn">
+              <FiLogOut
+                size="20"
+                className="header-icons"
+                onClick={onClickLogout}
+              />
+              .
+            </button>
+          </li>
+        </ul>
 
-          <button type="button" className="sm-logout-btn">
-            <FiLogOut
-              size="20"
-              className="header-icons"
-              onClick={onClickLogout}
-            />
-            .
-          </button>
-        </div>
-
-        <div className="lg-header-items-div">
+        <ul className="lg-header-items-div">
           <Link to="/" className="header-link">
-            <p className="home-job-text">Home</p>
+            <li className="li-sm-header-items-div">
+              <p className="home-job-text">Home</p>
+            </li>
           </Link>
 
           <Link to="/jobs" className="header-link">
-            <p className="home-job-text">Jobs</p>
+            <li className="li-sm-header-items-div">
+              <p className="home-job-text">Jobs</p>
+            </li>
           </Link>
-        </div>
+        </ul>
 
         <button type="button" className="logout-button" onClick={onClickLogout}>
           Logout

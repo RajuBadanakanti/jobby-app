@@ -8,8 +8,6 @@ import {MdStar, MdLocationOn} from 'react-icons/md'
 
 import Header from '../Header'
 
-import FilterGroups from '../FilterGroups'
-
 import './index.css'
 
 const employmentTypesList = [
@@ -71,7 +69,7 @@ class Jobs extends Component {
     apiProfileStatus: profileViewconstats.initial,
     apiJobsStatus: jobsViewconstats.initial,
     activeEmpTypes: [],
-    activeSalary: '',
+    activeSalary: 0,
     searchInput: '',
   }
 
@@ -118,7 +116,7 @@ class Jobs extends Component {
 
     return (
       <div className="profile-container">
-        <img src={profileImageUrl} alt="profile" className="profile-img" />
+        <img src={profileImageUrl} className="profile-img" alt="profile" />
         <h1 className="profile-name">{name}</h1>
         <p className="bio-para">{shortBio}</p>
       </div>
@@ -127,13 +125,18 @@ class Jobs extends Component {
 
   renderProfileFailureView = () => (
     <div className="profile-button-container">
-      <button type="button" className="profile-retry-btn">
+      <button
+        type="button"
+        data-testid="button"
+        className="profile-retry-btn"
+        onClick={this.getProfileData}
+      >
         Retry
       </button>
     </div>
   )
 
-  renderLoaderView = () => (
+  renderProfileLoaderView = () => (
     <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
@@ -154,26 +157,26 @@ class Jobs extends Component {
     this.setState({searchInput: event.target.value})
   }
 
-  onChangeSalaryRange = salary => {
-    this.setState({activeSalary: salary}, this.getJobsDetails)
+  onChangeSalaryRange = event => {
+    this.setState({activeSalary: event.target.value}, this.getJobsDetails)
   }
 
-  onChangeEmploymentType = activeType => {
+  onChangeEmploymentType = event => {
     // if input not in Active List else in List
     const {activeEmpTypes} = this.state
     const inputNotInList = activeEmpTypes.filter(
-      eachType => eachType === activeType,
+      eachType => eachType === event.target.value,
     )
     if (inputNotInList.length === 0) {
       this.setState(
         prevState => ({
-          activeEmpTypes: [...prevState.activeEmpTypes, activeType],
+          activeEmpTypes: [...prevState.activeEmpTypes, event.target.value],
         }),
         this.getJobsDetails,
       )
     } else {
       const filteredData = activeEmpTypes.filter(
-        eachType => eachType !== activeType,
+        eachType => eachType !== event.target.value,
       )
 
       this.setState({activeEmpTypes: filteredData}, this.getJobsDetails)
@@ -222,73 +225,70 @@ class Jobs extends Component {
       case profileViewconstats.failure:
         return this.renderProfileFailureView()
       case profileViewconstats.inProgress:
-        return this.renderLoaderView()
+        return this.renderProfileLoaderView()
       default:
         return ''
     }
   }
 
   // JOBS CONTENT VIEWS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  renderNoJobsView = () => (
-    <div className="no-jobs-container">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
-        alt="no jobs"
-        className="no-jobs-img"
-      />
-      <h1 className="no-jobs-header">No Jobs Found</h1>
-      <p className="no-job-description">
-        We could not find any jobs.Try other filters.
-      </p>
-    </div>
-  )
 
   renderJobscontentSuccessView = () => {
     const {jobsData} = this.state
-    const isEmptyJobsData = jobsData.length
-    if (isEmptyJobsData !== 0) {
-      return (
-        <ul className="jobs-ul-container">
-          {jobsData.map(eachJob => (
-            <Link to={`/jobs/${eachJob.id}`}>
-              <li key={eachJob.id} className="jobs-items-container">
-                <div className="company-logo-title-container">
-                  <img
-                    src={eachJob.companyLogoUrl}
-                    alt="company Logo"
-                    className="company-logo"
+    const isRenderJobsData = jobsData.length > 0
+
+    return isRenderJobsData ? (
+      <ul className="jobs-ul-container">
+        {jobsData.map(job => (
+          <li key={job.id} className="jobs-items-container">
+            <Link to={`/jobs/${job.id}`} className="link">
+              <div className="company-logo-title-container">
+                <img
+                  src={job.companyLogoUrl}
+                  alt="company logo"
+                  className="company-logo"
+                />
+                <div className="title-radio-div">
+                  <h1 className="job-title">{job.title}</h1>
+                  <div className="star-rating-div">
+                    <MdStar size="22" color="#fbbf24" />
+                    <p className="rating-text">{job.rating}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="location-type-package-container">
+                <div className="location-div">
+                  <MdLocationOn size="22" color="#ffffff" />
+                  <p className="job-location">{job.location}</p>
+                  <BsBriefcaseFill
+                    size="22"
+                    color="#ffffff"
+                    className="brief-case-icon"
                   />
-                  <div className="title-radio-div">
-                    <h1 className="job-title">{eachJob.title}</h1>
-                    <div className="star-rating-div">
-                      <MdStar size="22" color="#fbbf24" />
-                      <p className="rating-text">{eachJob.rating}</p>
-                    </div>
-                  </div>
+                  <p className="job-location">{job.employmentType}</p>
                 </div>
-                <div className="location-type-package-container">
-                  <div className="location-div">
-                    <MdLocationOn size="22" color="#ffffff" />
-                    <p className="job-location">{eachJob.location}</p>
-                    <BsBriefcaseFill
-                      size="22"
-                      color="#ffffff"
-                      className="brief-case-icon"
-                    />
-                    <p className="job-location">{eachJob.employmentType}</p>
-                  </div>
-                  <p className="job-package">{eachJob.packagePerAnnum}</p>
-                </div>
-                <hr className="hr-line" />
-                <p className="description">Description</p>
-                <p className="job-description">{eachJob.jobDescription}</p>
-              </li>
+                <p className="job-package">{job.packagePerAnnum}</p>
+              </div>
+              <hr className="hr-line" />
+              <h1 className="description">Description</h1>
+              <p className="job-description">{job.jobDescription}</p>
             </Link>
-          ))}
-        </ul>
-      )
-    }
-    return this.renderNoJobsView()
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div className="no-jobs-container">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+          className="no-jobs-img"
+          alt="no jobs"
+        />
+        <h1 className="no-jobs-header">No Jobs Found</h1>
+        <p className="no-job-description">
+          We could not find any jobs.Try other filters
+        </p>
+      </div>
+    )
   }
 
   rederJobsContentFailureView = () => (
@@ -298,17 +298,29 @@ class Jobs extends Component {
         alt="failure view"
         className="jobs-failure-img"
       />
-      <p className="job-failure-header">Oops! Something Went Wrong</p>
+      <h1 className="job-failure-header">Oops! Something Went Wrong</h1>
       <p className="job-failure-description">
-        We cannot seem to find the page you are looking for.
+        We cannot seem to find the page you are looking for
       </p>
-      <button type="button" className="job-failure-retry-btn">
+
+      <button
+        type="button"
+        data-testid="button"
+        className="job-failure-retry-btn"
+        onClick={this.getJobsDetails}
+      >
         Retry
       </button>
     </div>
   )
 
-  renderJobscontentSection = () => {
+  renderJobsLoaderView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
+  renderAllJobContentSection = () => {
     const {apiJobsStatus} = this.state
     switch (apiJobsStatus) {
       case jobsViewconstats.success:
@@ -316,9 +328,9 @@ class Jobs extends Component {
       case jobsViewconstats.failure:
         return this.rederJobsContentFailureView()
       case jobsViewconstats.inProgress:
-        return this.renderLoaderView()
+        return this.renderJobsLoaderView()
       default:
-        return ''
+        return null
     }
   }
 
@@ -329,17 +341,67 @@ class Jobs extends Component {
         <Header />
         <div className="bg-Jobs-container">
           <div className="jobs-main-container">
+            {/*  ...................  Profile Content.......................  */}
             <div className="profile-content-section">
               {this.renderProfileStatusViews()}
               <hr className="hr-line" />
-              <FilterGroups
-                employmentTypesList={employmentTypesList}
-                salaryRangesList={salaryRangesList}
-                onChangeEmploymentType={this.onChangeEmploymentType}
-                onChangeSalaryRange={this.onChangeSalaryRange}
-              />
+              {/*  ................... Filters Content.......................  */}
+
+              <div className="type-employment-container">
+                <h1 className="filters-header">Types of Employment</h1>
+                <ul className="checkbox-ul-container">
+                  {employmentTypesList.map(eachEmp => (
+                    <li
+                      key={eachEmp.employmentTypeId}
+                      className="checkbox-items-container"
+                      onChange={this.onChangeEmploymentType}
+                    >
+                      <input
+                        type="checkbox"
+                        className="checkbox-input"
+                        value={eachEmp.employmentTypeId}
+                        id={eachEmp.employmentTypeId}
+                      />
+                      <label
+                        htmlFor={eachEmp.employmentTypeId}
+                        className="label-text"
+                      >
+                        {eachEmp.label}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <hr className="hr-line" />
+              <div className="type-employment-container">
+                <h1 className="filters-header">Salary Range</h1>
+                <ul className="checkbox-ul-container">
+                  {salaryRangesList.map(eachSalary => (
+                    <li
+                      key={eachSalary.salaryRangeId}
+                      className="checkbox-items-container"
+                      onChange={this.onChangeSalaryRange}
+                    >
+                      <input
+                        type="radio"
+                        id={eachSalary.salaryRangeId}
+                        className="checkbox-input"
+                        value={eachSalary.salaryRangeId}
+                      />
+                      <label
+                        htmlFor={eachSalary.salaryRangeId}
+                        className="label-text"
+                      >
+                        {eachSalary.label}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
+
             <div className="jobs-content-section">
+              {/*  ................... Search Icon Content.......................  */}
               <div className="search-input-btn-container">
                 <input
                   type="search"
@@ -359,7 +421,8 @@ class Jobs extends Component {
                   ..
                 </button>
               </div>
-              {this.renderJobscontentSection()}
+              {/*  ...................  Job Card Content .......................  */}
+              {this.renderAllJobContentSection()}
             </div>
           </div>
         </div>

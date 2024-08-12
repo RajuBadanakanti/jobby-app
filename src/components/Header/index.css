@@ -30,6 +30,9 @@
   justify-content: center;
   align-items: center;
 }
+.li-sm-header-items-div {
+  list-style-type: none;
+}
 .lg-header-items-div {
   display: none;
 }
