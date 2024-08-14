@@ -1,3 +1,5 @@
+/* >>>>>>> Mobile Device >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
 .not-found-container {
   background-color: #000000;
   min-height: 100vh;
@@ -5,19 +7,48 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  text-align: center;
+  padding: 20px;
 }
 .not-found-img {
-  width: 60%;
+  width: 70%;
 }
 .not-found-header {
   color: #f8fafc;
   font-family: 'roboto';
-  font-size: 30px;
+  font-size: 22px;
 }
 .not-found-description {
   color: #cbd5e1;
   font-family: 'roboto';
-  font-size: 15px;
+  font-size: 12px;
   margin: 0;
+}
+
+/* >>>>>>> Large Device >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+@media screen and (min-width: 768px) {
+  .not-found-container {
+    background-color: #000000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  .not-found-img {
+    width: 50%;
+  }
+  .not-found-header {
+    color: #f8fafc;
+    font-family: 'roboto';
+    font-size: 35px;
+  }
+  .not-found-description {
+    color: #cbd5e1;
+    font-family: 'roboto';
+    font-size: 16px;
+    margin: 0;
+  }
 }

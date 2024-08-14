@@ -149,19 +149,27 @@ class JobItemDetails extends Component {
             <div className="job-item-title-rating-div">
               <h1 className="job-item-title">{title}</h1>
               <div className="job-item-star-rating-div">
-                <MdStar size="24" color="#fbbf24" />
+                <MdStar
+                  size="24"
+                  color="#fbbf24"
+                  className="job-item-star-icon"
+                />
                 <p className="job-item-rating-text">{rating}</p>
               </div>
             </div>
           </div>
           <div className="job-item-location-type-salary-container">
             <div className="job-item-location-div">
-              <MdLocationOn size="24" color="#ffffff" />
+              <MdLocationOn
+                size="24"
+                color="#ffffff"
+                className="job-item-location-icon"
+              />
               <p className="job-item-location">{location}</p>
               <BsBriefcaseFill
                 size="22"
                 color="#ffffff"
-                className="brief-case-icon"
+                className="job-item-brif-icon"
               />
               <p className="job-item-location">{employmentType}</p>
             </div>
@@ -173,7 +181,11 @@ class JobItemDetails extends Component {
 
             <a href={companyWebsiteUrl} className="visit-link">
               <p className="visit-text">Visit</p>
-              <BiLinkExternal size="22" color="#4f46e5" />
+              <BiLinkExternal
+                size="22"
+                color="#4f46e5"
+                className="job-item-visit-icon"
+              />
             </a>
           </div>
           <p className="job-items-description">{jobDescription}</p>
@@ -202,7 +214,7 @@ class JobItemDetails extends Component {
             />
           </div>
         </div>
-        {/*  ................... Life at Company .......................  */}
+        {/*  ................... Similar Jobs  .......................  */}
         <h1 className="similar-job-text">Similar Jobs</h1>
         <ul className="similar-jobs-ul-container">
           {similarJobDetails.map(eachSimiData => (
@@ -218,7 +230,11 @@ class JobItemDetails extends Component {
                     {eachSimiData.title}
                   </h1>
                   <div className="job-item-star-rating-div-similar-jobs">
-                    <MdStar size="22" color="#fbbf24" />
+                    <MdStar
+                      size="22"
+                      color="#fbbf24"
+                      className="job-item-star-icon-similar-jobs"
+                    />
                     <p className="job-item-rating-text-similar-jobs">
                       {eachSimiData.rating}
                     </p>
@@ -231,14 +247,18 @@ class JobItemDetails extends Component {
               </p>
               <div className="job-item-location-type-salary-container">
                 <div className="job-item-location-div-similar-jobs">
-                  <MdLocationOn size="20" color="#ffffff" />
+                  <MdLocationOn
+                    size="20"
+                    color="#ffffff"
+                    className="job-item-location-icon-similar-jobs"
+                  />
                   <p className="job-item-location-similar-jobs">
                     {eachSimiData.location}
                   </p>
                   <BsBriefcaseFill
                     size="18"
                     color="#ffffff"
-                    className="brief-case-icon"
+                    className="job-item-brief-case-icon"
                   />
                   <p className="job-item-location-similar-jobs">
                     {eachSimiData.employmentType}

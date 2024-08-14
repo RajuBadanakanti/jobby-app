@@ -251,14 +251,22 @@ class Jobs extends Component {
                 <div className="title-radio-div">
                   <h1 className="job-title">{job.title}</h1>
                   <div className="star-rating-div">
-                    <MdStar size="22" color="#fbbf24" />
+                    <MdStar
+                      size="22"
+                      color="#fbbf24"
+                      className="jobs-star-icon"
+                    />
                     <p className="rating-text">{job.rating}</p>
                   </div>
                 </div>
               </div>
               <div className="location-type-package-container">
                 <div className="location-div">
-                  <MdLocationOn size="22" color="#ffffff" />
+                  <MdLocationOn
+                    size="22"
+                    color="#ffffff"
+                    className="jobs-locatin-icon"
+                  />
                   <p className="job-location">{job.location}</p>
                   <BsBriefcaseFill
                     size="22"
@@ -285,7 +293,7 @@ class Jobs extends Component {
         />
         <h1 className="no-jobs-header">No Jobs Found</h1>
         <p className="no-job-description">
-          We could not find any jobs.Try other filters
+          We could not find any jobs. Try other filters.
         </p>
       </div>
     )
@@ -341,6 +349,26 @@ class Jobs extends Component {
         <Header />
         <div className="bg-Jobs-container">
           <div className="jobs-main-container">
+            {/*  ...................  SM-D Search Content.......................  */}
+            <div className="sm-search-input-btn-container">
+              <input
+                type="search"
+                placeholder="Search"
+                className="search-input"
+                value={searchInput}
+                onChange={this.onChangeSearchInput}
+                onKeyDown={this.onEnterkey}
+              />
+              <button
+                type="button"
+                data-testid="searchButton"
+                className="search-button"
+                onClick={this.onClickSearchBtn}
+              >
+                <BsSearch className="search-icon" />
+                ..
+              </button>
+            </div>
             {/*  ...................  Profile Content.......................  */}
             <div className="profile-content-section">
               {this.renderProfileStatusViews()}
@@ -348,7 +376,7 @@ class Jobs extends Component {
               {/*  ................... Filters Content.......................  */}
 
               <div className="type-employment-container">
-                <h1 className="filters-header">Types of Employment</h1>
+                <h1 className="filters-header">Type of Employment</h1>
                 <ul className="checkbox-ul-container">
                   {employmentTypesList.map(eachEmp => (
                     <li
@@ -399,9 +427,9 @@ class Jobs extends Component {
                 </ul>
               </div>
             </div>
-
             <div className="jobs-content-section">
               {/*  ................... Search Icon Content.......................  */}
+
               <div className="search-input-btn-container">
                 <input
                   type="search"
@@ -422,6 +450,7 @@ class Jobs extends Component {
                 </button>
               </div>
               {/*  ...................  Job Card Content .......................  */}
+
               {this.renderAllJobContentSection()}
             </div>
           </div>
